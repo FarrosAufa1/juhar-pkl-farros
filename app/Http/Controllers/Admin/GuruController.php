@@ -45,7 +45,9 @@ class GuruController extends Controller
         if ($request->hasFile('foto')) {
             $uniqueFile = uniqid() . '_' . $request->file('foto')->getClientOriginalName();
 
-            $foto = $request->file('foto')->storeAs('foto_guru', $uniqueFile, 'public');
+            $request->file('foto')->storeAs('foto_guru', $uniqueFile, 'public');
+
+            $foto = 'foto_guru' . $uniqueFile;
         }
 
         guru::create ([
@@ -62,12 +64,13 @@ class GuruController extends Controller
     public function delete(Request $request, $id)
     {
         $guru = guru::find($id);
+        if ($guru->foto) {
+        $foto = $guru->foto;
 
-        $foto = 'public/foto_guru' . $guru->foto;
-
-        if (Storage::exists($foto)) {
-            Storage::delete($foto);
+        if (Storage::disk('public')->exists($foto)) {
+            Storage::disk('public')->delete($foto);
         }
+    }
 
         $guru->delete();
 
@@ -77,26 +80,53 @@ class GuruController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function edit(string $id)
     {
-        //
+        $guru = Guru::find($id);
+        return view('admin.edit_guru' , compact('guru'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $guru = Guru::find($id);
+
+        $request->validate([
+            'nip' => 'required|digits:18|unique:guru,nip,' . $guru->id_guru . ',id_guru',
+            'email' => 'required|email|unique:guru,email,' . $guru->id_guru . ',id_guru',
+            'password' => 'nullable|min:6',
+            'nama_guru' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $foto = $guru->foto;
+        if ($request->hasFile('foto')) {
+            if ($foto) {
+                Storage::disk('public')->delete($foto);
+            }   
+        
+        $uniqueFile = uniqid() . '_' . $request->file('foto')->getClientOriginalName();
+        $request->file('foto')->storeAs('foto_guru', $uniqueFile, 'public');
+        $foto = 'foto_guru/' . $uniqueFile;
+        }
+
+        $guru->update ([
+            'nip' => $request->nip,
+            'email' => $request->email,
+            'password' => $request->filled('password') ? Hash::make($request->password) : $guru->password,
+            'nama_guru' => $request->nama_guru,
+            'foto' => $foto,
+        ]);
+
+        return redirect()->route('admin.guru')->with('success','Data Guru Berhasil di Update');
     }
+    
 
     /**
      * Remove the specified resource from storage.

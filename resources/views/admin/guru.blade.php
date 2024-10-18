@@ -21,7 +21,7 @@
                             <th scope="col">No</th>
                             <th scope="col">NIP</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Nama_Guru</th>
+                            <th scope="col">Nama Guru</th>
                             <th scope="col">Foto</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -30,15 +30,15 @@
                         @foreach ($gurus as $guru)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $guru->NIP }}</td>
+                            <td>{{ $guru->nip }}</td>
                             <td>{{ $guru->email }}</td>
-                            <td>{{ $guru->Nama_Guru }}</td>
+                            <td>{{ $guru->nama_guru }}</td>
                             <td>
-                                <img src="{{ asset('storage/' .$guru->foto)}}" alt="" height="30">
+                                <img src="{{ asset('storage/' . $guru->foto)}}" alt="" height="30">
                             </td>
                             <td>
-                                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="{{ route('admin.guru.delete', $guru->id_guru) }}" class="btn btn-warning btn-sm">Hapus</a>
+                                <a href="{{ route('admin.guru.edit', $guru->id_guru) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.guru.delete', $guru->id_guru) }}" onclick="return confirm('Yakin ingin hapus data?')" class="btn btn-danger btn-sm">Hapus</a>
                             </td>
                         </tr>
                         @endforeach
