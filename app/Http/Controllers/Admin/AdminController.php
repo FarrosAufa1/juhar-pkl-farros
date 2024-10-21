@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admim;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -69,6 +69,6 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return redirect()->route('admin.dashboard')->with('success', 'Resource deleted successfully!');
     }
 }

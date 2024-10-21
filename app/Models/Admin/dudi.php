@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class dudi extends Model
 {
     use HasFactory;
-    use HasFactory;
     protected $table = 'dudi';
     protected $primaryKey = 'id_dudi';
 
@@ -17,7 +16,8 @@ class dudi extends Model
         'alamat',
     ];
 
-    protected $hidden = [
-        'password',
-    ];
+    public function pembimbingDudi()
+    {
+        return $this->belongsTo(pembimbing::class, 'id_guru', 'id_guru');
+    }
 }

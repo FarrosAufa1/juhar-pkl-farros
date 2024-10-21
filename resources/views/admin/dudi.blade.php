@@ -12,7 +12,7 @@
             @endif
             <h6 class="mb-4">Data Dudi</h6>
             <div class="table-responsive">
-                <a href="" class="btn btn-primary btn-sm">Tambah</a>
+                <a href="{{ route('admin.dudi.create') }}" class="btn btn-primary btn-sm">Tambah</a>
                 <table class="table" id="id_dudi">
                     <thead>
                         <tr>
@@ -23,15 +23,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach ($dudis as $dudi)
                         <tr>
-                            <th scope="row"></th>
-                            <td></td>
-                            <td></td>
+                            <th scope="row">{{ $loop->iteration }}</th>
+                            <td>{{ $dudi->nama_dudi }}</td>
+                            <td>{{ $dudi->alamat }}</td>
                             <td>
-                                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="" onclick="return confirm('Yakin ingin hapus data?')" class="btn btn-danger btn-sm">Hapus</a>
+                                <a href="{{ route('admin.dudi.edit', $dudi->id_dudi) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.dudi.delete', $dudi->id_dudi) }}" onclick="return confirm('Yakin ingin hapus data?')" class="btn btn-danger btn-sm">Hapus</a>
                             </td>
                         </tr>
+                        @endforeach
                       
                     </tbody>
                 </table>
