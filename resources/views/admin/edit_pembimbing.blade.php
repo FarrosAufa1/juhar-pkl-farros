@@ -30,8 +30,8 @@
                         <option value="">-Pilih-</option>
                         @foreach($dudis as $dudi)
                         <option value="{{ $dudi->id_dudi }}" {{ $pembimbing->id_guru == $guru->id_guru ? 'selected' : '' }}>{{ $dudi->nama_dudi }}</option>
+                        @endforeach
                     </select>
-                    @endforeach
                     @error('id_dudi')
                     {{ $message }}
                     @enderror

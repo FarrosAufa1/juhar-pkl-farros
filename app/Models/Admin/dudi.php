@@ -18,6 +18,6 @@ class dudi extends Model
 
     public function pembimbingDudi()
     {
-        return $this->belongsTo(pembimbing::class, 'id_guru', 'id_guru');
+        return $this->belongsTo(pembimbing::class, 'id_dudi', 'id_dudi');
     }
 }
