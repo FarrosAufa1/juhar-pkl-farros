@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Tambah Guru')
+@section('title', 'Edit Guru')
 
 @section('content')
 <div class="row g-4">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="mb-3">
                     <label type="nama_guru" class="form-label">Nama Guru</label>
-                    <input type="text" class="form-control" id="nama_guru" name="nama_guru"  value="{{ old('nama_guru', $guru->nip)}} ">
+                    <input type="text" class="form-control" id="nama_guru" name="nama_guru"  value="{{ old('nama_guru', $guru->nama_guru)}} ">
                     @error('nama_guru')
                     {{ $message }}
                     @enderror

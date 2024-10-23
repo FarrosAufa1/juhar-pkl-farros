@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Jurnal Harian PKL</title>
+    <title>JUHAR PKL - GURU LOGIN</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -20,12 +20,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -42,36 +41,41 @@
         <!-- Sign In Start -->
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
-                <div class="col-6">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                       <div class="text-center">
-                        <img class="mb-2" src="{{ asset('img/juhar.png') }}" alt="LOGO" height="100">
-                            <h4>JUHAR PKL</h4>
-                            <p>Sistem jurnal harian PKL berbasis website, silahkan masuk untuk informasi lebih lanjut.</p>
+                        @if ($errors->has('login_error'))
+                       <div class="alert alert-danger">
+                       {{ $errors->first('login_error') }}
                        </div>
-                       <a href="{{ route('guru.login') }}">
-                            <div class="card shadow-sm">
-                                <div class="card-body d-flex align-items-center">
-                                <img  src="{{ asset('img/guru.png')}}" alt="logo guru" height="80">
-                                   <div class="ms-3">
-                                   <h4 class="mb-0">Login Guru atau Pembimbing</h4>
-                                   <small>Masuk sebagai guru atau pembimbing</small>
-                                   </div>
-                                </div>
+                        @endif
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <a href="{{ route('guru.login') }}" class="">
+                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>JUHAR</h3>
+                            </a>
+                            <h3>Sign In</h3>
+                        </div>
+                        <form action="{{ route('guru.auth') }}" method="post">
+                            @csrf
+                            <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" name="nip_or_email" placeholder="NIP atau email" value="{{ old('nip_or_email') }}">
+                            <label for="floatingInput">NIP atau email</label>
+                            <div class="text-danger">
+                            @error ('nip_or_email')
+                            {{ $message }}
+                            @enderror
                             </div>
-                            <br>
-                       </a>
-                       <a href="">
-                            <div class="card shadow-sm">
-                                <div class="card-body d-flex align-items-center">
-                                <img  src="{{ asset('img/siswa.png')}}" alt="logo siswa" height="80">
-                                   <div style="margin-left: 5px;">
-                                   <h4 class="mb-0">Login siswa</h4>
-                                   <small>Masuk sebagai siswa</small>
-                                   </div>
-                                </div>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                            <div class="text-danger">
+                            @error ('username')
+                            {{ $message }}
+                            @enderror
                             </div>
-                       </a>
+                        </div>
+                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -82,8 +86,9 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
 </html>
