@@ -19,6 +19,7 @@ Route::post('/admin/login', [AdminLoginController::class, 'auth'])->name('admin.
 
 Route::get('/guru/login', [GuruLoginController::class, 'login'])->name('guru.login');
 Route::post('/guru/login', [GuruLoginController::class, 'auth'])->name('guru.auth');
+
 });
 
 
@@ -55,4 +56,13 @@ Route::middleware(['admin'])->group(function (){
     Route::get('/admin/pembimbing/delete/{id}/siswa/delete/{id_siswa}', [SiswaController::class, 'delete'])->name('admin.pembimbing.siswa.delete');
     Route::get('/admin/pembimbing/edit/{id}/siswa/{id_siswa}', [SiswaController::class, 'edit'])->name('admin.pembimbing.siswa.edit');
     Route::put('/admin/pembimbing/edit/{id}/siswa/{id_siswa}', [SiswaController::class, 'update'])->name('admin.pembimbing.siswa.update');
+});
+
+Route::middleware(['guru'])->group(function (){
+    Route::get('/guru/logout', [GuruController::class, 'logout'])->name('guru.logout');
+    Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::get('/guru/pembimbing', [GuruController::class, 'pembimbing'])->name('guru.pembimbing');
+    Route::get('/guru/pembimbing/{id}/siswa', [GuruController::class, 'siswa'])->name('guru.pembimbing.siswa');
+    Route::get('/guru/profile', [GuruController::class, 'profile'])->name('guru.profile');
+    Route::put('/guru/profile/update', [GuruController::class, 'updateGuru'])->name('guru.profile.update');
 });

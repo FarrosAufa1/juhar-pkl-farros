@@ -69,7 +69,7 @@
                             <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                             <div class="text-danger">
-                            @error ('username')
+                            @error ('password')
                             {{ $message }}
                             @enderror
                             </div>
