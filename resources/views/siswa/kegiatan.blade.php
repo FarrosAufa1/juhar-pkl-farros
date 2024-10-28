@@ -1,9 +1,13 @@
-@extends('guru.layouts.app')
+@extends('siswa.layouts.app')
 
-@section('title', 'pembimbing')
+@section('title', 'kegiatan')
 
 @section('content')
-
+@if ($errors->has('access'))
+<div class="alert alert-danger">
+    {{ $errors->first('access') }}
+</div>
+@endif
 <div class="crow r -4">
     <div class="col-12">
         <div class="bg-light rounded h-100 p-4">
@@ -12,25 +16,27 @@
                 {{ session('success') }}
             </div>
             @endif
-            <h6 class="mb-4">Data pembimbing</h6>
+
+            <h6 class="mb-4">Data Kegiatan</h6>
             <div class="table-responsive">
-                <table class="table" id="pembimbing">
+            <a href="{{ route('siswa.tambah.kegiatan') }}" class="btn btn-primary btn-sm">Tambah</a>
+                <table class="table" id="kegiatan">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">nama guru</th>
-                            <th scope="col">nama dudi</th>
+                            <th scope="col">tanggal kegiatan</th>
+                            <th scope="col">nama kegiatan</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pembimbings as $pembimbing)
+                        @foreach ($kegiatans as $kegiatan)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $pembimbing->guru->nama_guru }}</td>
-                            <td>{{ $pembimbing->dudi->nama_dudi }}</td>
+                            <td>{{ $kegiatan->tanggal_kegiatan }}</td>
+                            <td>{{ $kegiatan->nama_kegiatan }}</td>
                             <td>
-                                <a href="{{ route('guru.pembimbing.siswa', $pembimbing->id_pembimbing) }}" class="btn btn-info btn-sm">Siswa</a>
+                                <a href="" class="btn btn-info btn-sm">Detail</a>
                             </td>
                         </tr>
                         @endforeach
@@ -39,11 +45,11 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 
 <script>
     $(document).ready(function() {
-        $('#pembimbing').DataTable();
+        $('#kegiatan').DataTable();
     })
 </script>
 

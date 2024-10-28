@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\pembimbing;
 use App\Models\Admin\siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -106,4 +108,17 @@ class SiswaController extends Controller
         return redirect()->route('admin.pembimbing.siswa', $id)->with('success','Data siswa Berhasil di Update');
     }
 
+    public function dashboard()
+    {
+        $siswa = Auth::guard('siswa')->user();
+        return view('siswa.dashboard', compact('siswa'));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('siswa')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('siswa.login');
+    }
 }

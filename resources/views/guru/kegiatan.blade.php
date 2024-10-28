@@ -33,7 +33,7 @@
 
             <h6 class="mb-4">Data Kegiatan</h6>
             <div class="table-responsive">
-                <table class="table" id="id_kegiatan">
+                <table class="table" id="kegiatan">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -59,5 +59,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#kegiatan').DataTable();
+    })
+</script>
 
 @endsection
