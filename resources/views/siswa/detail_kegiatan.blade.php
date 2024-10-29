@@ -1,4 +1,4 @@
-@extends('guru.layouts.app')
+@extends('siswa.layouts.app')
 
 @section('title', 'Detail Kegiatan')
 
