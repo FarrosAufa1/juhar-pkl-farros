@@ -15,7 +15,7 @@
             <h6 class="mb-4">Data pembimbing</h6>
             <div class="table-responsive">
                 <a href="{{ route('admin.pembimbing.create') }}" class="btn btn-primary btn-sm">Tambah</a>
-                <table class="table" id="id_pembimbing">
+                <table class="table" id="pembimbing">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -43,5 +43,11 @@
         </div>
     </div>
 </div> 
+
+<script>
+    $(document).ready(function() {
+        $('#pembimbing').DataTable();
+    })
+</script>
 
 @endsection

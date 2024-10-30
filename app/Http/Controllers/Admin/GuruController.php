@@ -50,7 +50,7 @@ class GuruController extends Controller
 
             $request->file('foto')->storeAs('foto_guru', $uniqueFile, 'public');
 
-            $foto = 'foto_guru' . $uniqueFile;
+            $foto = 'foto_guru/' . $uniqueFile;
         }
 
         guru::create ([
@@ -86,6 +86,9 @@ class GuruController extends Controller
     public function edit(string $id)
     {
         $guru = Guru::find($id);
+        if (!$guru) {
+           return back();
+        }
         return view('admin.edit_guru' , compact('guru'));
     }
 

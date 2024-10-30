@@ -13,7 +13,7 @@
             <h6 class="mb-4">Data Dudi</h6>
             <div class="table-responsive">
                 <a href="{{ route('admin.dudi.create') }}" class="btn btn-primary btn-sm">Tambah</a>
-                <table class="table" id="id_dudi">
+                <table class="table" id="dudi">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach ($dudis as $dudi)
+                        @foreach ($dudis as $dudi)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $dudi->nama_dudi }}</td>
@@ -34,12 +34,18 @@
                             </td>
                         </tr>
                         @endforeach
-                      
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#dudi').DataTable();
+    })
+</script>
 
 @endsection

@@ -12,7 +12,7 @@
                 @method('PUT')
                 <div class="mb-3">
                     <label for="nisn" class="form-label">NISN</label>
-                    <input type="text" class="form-control" id="nisn" name="nisn"  value="{{ old('nisn', $siswa->nisn)}}" >
+                    <input type="text" class="form-control" id="nisn" name="nisn"  value="{{ old('nisn', $siswa->NISN)}}" >
                     <div class="text-danger">
                         @error('nisn')
                         {{ $message }}

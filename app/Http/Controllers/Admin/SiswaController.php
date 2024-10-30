@@ -14,6 +14,10 @@ class SiswaController extends Controller
 {
     public function siswa($id)
     {
+        $pembimbing = pembimbing::find($id);
+        if (!$pembimbing) {
+            return back();
+        }
         $siswas = siswa::where('id_pembimbing', $id)->get();
         $siswa = siswa::where('id_pembimbing', $id)->first();
         return view('admin.siswa', compact('siswas', 'siswa', 'id'));
@@ -21,6 +25,10 @@ class SiswaController extends Controller
 
     public function create($id)
     {
+        $pembimbing = pembimbing::find($id);
+        if (!$pembimbing) {
+            return back();
+        }
         return view('admin.tambah_siswa', compact('id'));
     }
 
@@ -72,7 +80,14 @@ class SiswaController extends Controller
 
     public function edit(string $id, $id_siswa)
     {
+        $pembimbing = pembimbing::find($id);
+        if (!$pembimbing) {
+            return back();
+        }
         $siswa = siswa::find($id_siswa);
+        if (!$siswa) {
+            return back();
+        }
         return view('admin.edit_siswa' , compact('siswa', 'id'));
     }
 
@@ -120,5 +135,43 @@ class SiswaController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('siswa.login');
+    }
+
+    public function profile()
+    {
+        $profile = Auth::guard('siswa')->user();
+        return view('siswa.profile', compact('profile'));
+    }
+
+    public function updateSiswa(Request $request)
+    {
+        $id_siswa = Auth::guard('siswa')->user()->id_siswa;
+        $siswa = siswa::find($id_siswa);
+        
+        $request->validate([
+            'nama_siswa' => 'required',
+            'password' => 'nullable',
+            'foto' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+        ]);
+
+        $foto = $siswa->foto;
+        if ($request->hasFile('foto')) {
+            if ($foto) {
+                Storage::disk('public')->delete($foto);
+            }   
+        
+        $uniqueFile = uniqid() . '_' . $request->file('foto')->getClientOriginalName();
+        $request->file('foto')->storeAs('foto_siswa', $uniqueFile, 'public');
+        $foto = 'foto_siswa/' . $uniqueFile;
+        }
+
+        $siswa->update([
+            'nama_siswa' => $request->nama_siswa,
+            'password' => $request->filled('password') ? Hash::make($request->password) : $siswa->password,
+            'foto' => $foto,
+        ]);
+
+        return redirect()->back()->with('success', 'Data anda berhasil di update');
+
     }
 }

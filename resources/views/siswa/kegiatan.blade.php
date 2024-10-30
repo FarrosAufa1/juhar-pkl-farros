@@ -39,8 +39,8 @@
                             <td>{{ $kegiatan->nama_kegiatan }}</td>
                             <td>
                                 <a href="{{ route('siswa.kegiatan.detail', ['id_kegiatan' => $kegiatan->id_kegiatan]) }}" class="btn btn-info btn-sm">Detail</a>
-                                <a href="{{ }}" class="btn btn-info btn-sm">Edit</a>
-                                <a href="" class="btn btn-info btn-sm">Hapus</a>
+                                <a href="{{ route('siswa.kegiatan.edit', ['id_kegiatan' => $kegiatan->id_kegiatan]) }}" class="btn btn-info btn-sm">Edit</a>
+                                <a href="{{ route('siswa.kegiatan.delete', ['id_kegiatan' => $kegiatan->id_kegiatan]) }}" class="btn btn-info btn-sm">Hapus</a>
                             </td>
                         </tr>
                         @endforeach
@@ -53,7 +53,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#kegiatan').DataTable();
+        $('#ke  iatan').DataTable();
     })
 </script>
 

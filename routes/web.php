@@ -83,4 +83,7 @@ Route::middleware(['siswa'])->group(function () {
     Route::get('/siswa/kegiatan/detail/{id_kegiatan}', [KegiatanController::class, 'detail'])->name('siswa.kegiatan.detail');
     Route::get('/siswa/kegiatan/edit/{id_kegiatan}', [KegiatanController::class, 'edit'])->name('siswa.kegiatan.edit');
     Route::put('/siswa/kegiatan/edit/{id_kegiatan}', [KegiatanController::class, 'update'])->name('siswa.kegiatan.update');
+    Route::get('/siswa/kegiatan/delete/{id_kegiatan}', [KegiatanController::class, 'delete'])->name('siswa.kegiatan.delete');
+    Route::get('/siswa/profile', [SiswaController::class, 'profile'])->name('siswa.profile');
+    Route::put('/siswa/profile/update', [SiswaController::class, 'updateSiswa'])->name('siswa.profile.update');
 });

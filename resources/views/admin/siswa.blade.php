@@ -51,7 +51,7 @@
                         @foreach ($siswas as $siswa)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $siswa->nisn}}</td>
+                            <td>{{ $siswa->NISN}}</td>
                             <td>{{ $siswa->nama_siswa}}</td>
                             <td>
                                 <img src="{{ asset('storage/' . $siswa->foto)}}" alt="" height="30">

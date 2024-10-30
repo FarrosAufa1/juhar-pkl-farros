@@ -171,13 +171,17 @@ class KegiatanController extends Controller
 
     public function edit(string $id_kegiatan)
     {
-        $siswa = siswa::find($id_kegiatan);
-        return view('siswa.edit_kegiatan', compact('siswa'));
+        $id_siswa = Auth::guard('siswa')->user()->id_siswa;
+        $kegiatan = Kegiatan::where('id_siswa', $id_siswa)
+                    ->where('id_kegiatan', $id_kegiatan)
+                    ->first();
+        return view('siswa.edit', compact('kegiatan'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id_kegiatan)
     {
-        $siswa = siswa::find($id);
+        $id_siswa = Auth::guard('siswa')->user()->id_siswa;
+        $kegiatan = kegiatan::find($id_kegiatan);
 
         $request->validate([
             'tanggal_kegiatan' => 'nullable',
@@ -186,7 +190,8 @@ class KegiatanController extends Controller
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $foto = $siswa->foto;
+        
+        $foto = $kegiatan->foto;
         if ($request->hasFile('foto')) {
             if ($foto) {
                 Storage::disk('public')->delete($foto);
@@ -197,13 +202,31 @@ class KegiatanController extends Controller
             $foto = 'foto_kegiatan/' . $uniqueFile;
         }
 
-        $siswa->update([
+        $kegiatan->update([
             'tanggal_kegiatan' => $request->tanggal_kegiatan,
             'nama_kegiatan' => $request->nama_kegiatan,
             'ringkasan_kegiatan' => $request->ringkasan_kegiatan,
             'foto' => $foto,
         ]);
 
-        return redirect()->route('siswa.kegiatan')->with('success', 'Data kegiatan Berhasil di Update');
+        return redirect()->route('siswa.kegiatan', compact('id_kegiatan'))->with('success', 'Data kegiatan Berhasil di Update');
     }
+
+    public function delete($id_kegiatan)
+    {
+        $siswa = Auth::guard('siswa')->user()->id_siswa;
+        $kegiatan = Kegiatan::find($id_kegiatan);
+        if ($kegiatan->foto) {
+        $foto = $kegiatan->foto;
+
+        if (Storage::disk('public')->exists($foto)) {
+            Storage::disk('public')->delete($foto);
+        }
+    }
+
+        $kegiatan->delete();
+
+        return redirect()->route('siswa.kegiatan')->with('success', 'Data Siswa Berhasil di Hapus');
+    }
+
 }

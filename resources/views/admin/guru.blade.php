@@ -15,7 +15,7 @@
             <h6 class="mb-4">Data Guru</h6>
             <div class="table-responsive">
                 <a href="{{ route('admin.guru.create') }}" class="btn btn-primary btn-sm">Tambah</a>
-                <table class="table" id="id_guru">
+                <table class="table" id="guru">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
